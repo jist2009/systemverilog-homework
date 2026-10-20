@@ -1,3 +1,7 @@
+Credits & Context:
+
+This is a personal practice fork of systemverilog-homework by Yuri Panchul. I do not claim ownership of the base codebase or the assignments; this repository tracks my own solutions and progress.
+
 # A collection of SystemVerilog exercises from the beginning to the microarchitectural job interview level
 
 [Русский](README_ru.md)
