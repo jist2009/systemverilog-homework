@@ -48,6 +48,22 @@ module serial_comparator_most_significant_first
   output a_greater_b
 );
 
+	logic prev_a_great_b, prev_a_eq_b;
+
+	assign a_eq_b 		= prev_a_eq_b & ( a == b);	
+	assign a_greater_b 	= prev_a_great_b | (prev_a_eq_b &(a > b));
+	assign a_less_b  	= (~a_greater_b) & (~a_eq_b);
+	
+	always_ff @ (posedge clk) begin 
+		if (rst) begin
+			prev_a_great_b	<= 0;
+			prev_a_eq_b 	<= 1;
+		end 
+		else begin
+			prev_a_great_b 	<= a_greater_b;
+			prev_a_eq_b 		<= a_eq_b;
+		end
+	end 	
   // Task:
   // Implement a module that compares two numbers in a serial manner.
   // The module inputs a and b are 1-bit digits of the numbers
