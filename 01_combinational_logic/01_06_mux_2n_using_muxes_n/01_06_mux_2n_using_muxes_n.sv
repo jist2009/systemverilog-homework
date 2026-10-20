@@ -24,6 +24,18 @@ module mux_4_1
   output [3:0] y
 );
 
+wire [3:0] w_m1, w_m2;
+
+mux_2_1 m1(
+	.d0(d0),
+	.d1(d1),
+	.sel(sel[0]),
+	.y(w_m1));
+
+mux_2_1 m2(.d0(d2), .d1(d3), .sel(sel[0]), .y(w_m2));
+
+mux_2_1 m_final(.d0(w_m1), .d1(w_m2), .sel(sel[1]), .y(y));
+
   // Task:
   // Implement mux_4_1 using three instances of mux_2_1
 

@@ -13,6 +13,21 @@ module serial_adder_with_vld
   output sum
 );
 
+  logic carry;
+  logic [1:0] full_sum;
+
+  assign full_sum = vld ? (a + b + carry) : 2'b00;
+  assign sum      = full_sum[0];
+
+  always_ff @(posedge clk) begin
+    if (rst) begin
+      carry <= 1'b0;
+    end else if (vld) begin
+      carry <= last ? 1'b0 : full_sum[1];
+    end
+  end
+
+endmodule
   // Task:
   // Implement a module that performs serial addition of two numbers
   // (one pair of bits is summed per clock cycle).
@@ -29,5 +44,3 @@ module serial_adder_with_vld
   //
   // When rst is high, the module should reset its internal state.
 
-
-endmodule

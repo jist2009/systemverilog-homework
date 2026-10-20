@@ -37,6 +37,8 @@ module testbench;
 
   initial
     begin
+   $dumpfile("dump.vcd");
+   $dumpvars(0, testbench); // ou le nom de ton module top
       test ('ha, 'hb, 'hc, 'hd, 0, 'ha);
       test ('ha, 'hb, 'hc, 'hd, 1, 'hb);
       test ('ha, 'hb, 'hc, 'hd, 2, 'hc);
