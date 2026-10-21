@@ -9,6 +9,22 @@ module round_robin_arbiter_with_2_requests
     input  [1:0] requests,
     output [1:0] grants
 );
+
+	reg priority_ptr; // 0: priorite req[0], 1: priorite req[1];
+	
+	assign grants[0] = requests[0] & (!priority_ptr | !requests[1]);
+	assign grants[1] = requests[1] & ( priority_ptr | !requests[0]);
+	
+	always_ff @ (posedge clk) begin
+		if(rst) begin
+			priority_ptr <= 1'b0;
+		end else begin 
+			if (grants[0]) 
+				priority_ptr <= 1'b1;
+			else if (grants[1]) 
+				priority_ptr <= 1'b0;
+			end
+		end 
     // Task:
     // Implement a "arbiter" module that accepts up to two requests
     // and grants one of them to operate in a round-robin manner.
